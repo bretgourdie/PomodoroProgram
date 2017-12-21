@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomodoro UI", "Pomodoro UI\Pomodoro UI.csproj", "{E41D3530-3C2E-4401-80E9-714A842135D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomodoro Logic", "Pomodoro Logic\Pomodoro Logic.csproj", "{A1C0D188-526D-481A-8489-02E3057A4C26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E41D3530-3C2E-4401-80E9-714A842135D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41D3530-3C2E-4401-80E9-714A842135D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41D3530-3C2E-4401-80E9-714A842135D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41D3530-3C2E-4401-80E9-714A842135D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C0D188-526D-481A-8489-02E3057A4C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C0D188-526D-481A-8489-02E3057A4C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C0D188-526D-481A-8489-02E3057A4C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C0D188-526D-481A-8489-02E3057A4C26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C93A1B99-61BA-41A5-B23A-A6D6FC88C13B}
+	EndGlobalSection
+EndGlobal
