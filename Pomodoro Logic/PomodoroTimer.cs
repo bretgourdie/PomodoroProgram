@@ -74,8 +74,10 @@ namespace Pomodoro_Logic
 
         private Timer getTimer()
         {
-            var timer = new Timer(NumberOfMillisecondsInOneSecond);
-            timer.AutoReset = true;
+            var timer = new Timer(NumberOfMillisecondsInOneSecond)
+            {
+                AutoReset = true
+            };
             timer.Elapsed += timer_Elapsed;
             return timer;
         }
