@@ -30,7 +30,7 @@ namespace Pomodoro_Logic
         {
             decrementTimeRemaining();
             Tick(this, new EventArgs());
-            if (!IsRunning())
+            if (IsFinishedRunning())
             {
                 Stop();
                 SessionComplete(this, new EventArgs());
@@ -62,9 +62,9 @@ namespace Pomodoro_Logic
             }
         }
 
-        public bool IsRunning()
+        public bool IsFinishedRunning()
         {
-            return this.currentSeconds != 0;
+            return this.currentSeconds == 0;
         }
 
         private void decrementTimeRemaining()
