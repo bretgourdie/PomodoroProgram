@@ -11,6 +11,9 @@ namespace Pomodoro_Logic
     {
         public int StartingSeconds { get; private set; }
 
+        public event EventHandler Tick;
+        public event EventHandler SessionComplete;
+
         private int currentSeconds { get; set; }
 
         private Timer timer { get; set; }
@@ -26,11 +29,11 @@ namespace Pomodoro_Logic
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             decrementTimeRemaining();
-            throw new NotImplementedException("Publish Tick");
+            Tick(this, new EventArgs());
             if (!IsRunning())
             {
                 Stop();
-                throw new NotImplementedException("Publish End");
+                SessionComplete(this, new EventArgs());
             }
         }
 
