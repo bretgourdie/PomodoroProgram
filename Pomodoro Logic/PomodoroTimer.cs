@@ -26,17 +26,6 @@ namespace Pomodoro_Logic
             this.timer = getTimer();
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            decrementTimeRemaining();
-            Tick(this, new EventArgs());
-            if (IsFinishedRunning())
-            {
-                Stop();
-                SessionComplete(this, new EventArgs());
-            }
-        }
-
         public void Start()
         {
             this.timer.Start();
@@ -50,6 +39,17 @@ namespace Pomodoro_Logic
         public void Reset(bool stopTimer = true)
         {
             resetAndStopTimer(stopTimer);
+        }
+
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            decrementTimeRemaining();
+            Tick(this, new EventArgs());
+            if (IsFinishedRunning())
+            {
+                Stop();
+                SessionComplete(this, new EventArgs());
+            }
         }
 
         private void resetAndStopTimer(bool stopTimer)
@@ -76,7 +76,7 @@ namespace Pomodoro_Logic
         {
             var timer = new Timer(NumberOfMillisecondsInOneSecond);
             timer.AutoReset = true;
-            timer.Elapsed += Timer_Elapsed;
+            timer.Elapsed += timer_Elapsed;
             return timer;
         }
     }
