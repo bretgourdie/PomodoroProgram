@@ -44,11 +44,15 @@ namespace Pomodoro_Logic
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             decrementTimeRemaining();
-            Tick(this, new EventArgs());
+
             if (IsFinishedRunning())
             {
                 Stop();
                 SessionComplete(this, new EventArgs());
+            }
+            else
+            {
+                Tick(this, new EventArgs());
             }
         }
 
