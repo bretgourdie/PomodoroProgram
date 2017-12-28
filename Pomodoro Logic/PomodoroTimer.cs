@@ -48,12 +48,17 @@ namespace Pomodoro_Logic
             if (IsFinishedRunning())
             {
                 Stop();
-                SessionComplete(this, new EventArgs());
+                SessionComplete(this, getEventArgs());
             }
             else
             {
-                Tick(this, new EventArgs());
+                Tick(this, getEventArgs());
             }
+        }
+
+        private EventArgs getEventArgs()
+        {
+            return new EventArgs();
         }
 
         private void resetAndStopTimer(bool stopTimer)
