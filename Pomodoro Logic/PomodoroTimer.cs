@@ -9,50 +9,59 @@ namespace Pomodoro_Logic
 {
     public class PomodoroTimer
     {
-        public int StartingSeconds { get; private set; }
+        public int WorkingSessionSeconds { get; private set; }
+        public int RestSessionSeconds { get; private set; }
 
         public event EventHandler Tick;
         public event EventHandler SessionComplete;
+        public event EventHandler WorkingSessionComplete;
+        public event EventHandler RestSessionComplete;
 
-        private int currentSeconds { get; set; }
+        private Timer currentTimer { get; set; }
 
-        private Timer timer { get; set; }
+        private Timer workingTimer { get; set; }
+        private Timer restTimer { get; set; }
+
+        private Timer tickingTimer { get; set; }
 
         private const int NumberOfMillisecondsInOneSecond = 1000;
 
-        public PomodoroTimer(int seconds)
+        public PomodoroTimer(int workingSessionSeconds, int restSessionSeconds)
         {
-            this.StartingSeconds = seconds;
-            this.timer = getTimer();
+            this.WorkingSessionSeconds = workingSessionSeconds;
+            this.RestSessionSeconds = RestSessionSeconds;
         }
 
         public void Start()
         {
-            this.timer.Start();
+            setTimers(true);
         }
 
         public void Stop()
         {
-            this.timer.Stop();
+            setTimers(false);
         }
 
         public void Reset(bool stopTimer = true)
         {
-            resetAndStopTimer(stopTimer);
+            Start();
+            Stop();
         }
 
-        private void timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void setTimers(bool start)
         {
-            decrementTimeRemaining();
+            var timers = new Timer[] { currentTimer, tickingTimer };
 
-            if (IsFinishedRunning())
+            foreach(var timer in timers)
             {
-                Stop();
-                SessionComplete(this, getEventArgs());
-            }
-            else
-            {
-                Tick(this, getEventArgs());
+                if (start)
+                {
+                    timer.Start();
+                }
+                else
+                {
+                    timer.Stop();
+                }
             }
         }
 
@@ -61,33 +70,50 @@ namespace Pomodoro_Logic
             return new EventArgs();
         }
 
-        private void resetAndStopTimer(bool stopTimer)
+        private Timer getNewTickingTimer(int interval)
         {
-            this.currentSeconds = this.StartingSeconds;
+            var timer = getTimer(interval, true);
+            timer.Elapsed += tickingTimerElapsed;
+            return timer;
+        }
 
-            if (stopTimer)
+        private void tickingTimerElapsed(object sender, EventArgs e)
+        {
+            Tick(this, getEventArgs());
+        }
+
+        private Timer getNewWorkingTimer(int interval)
+        {
+            var timer = getTimer(interval, false);
+            timer.Elapsed += workingTimerElapsed;
+            return timer;
+        }
+
+        private void workingTimerElapsed(object sender, EventArgs e)
+        {
+            WorkingSessionComplete(this, getEventArgs());
+            SessionComplete(this, getEventArgs());
+        }
+
+        private Timer getNewRestTimer(int interval)
+        {
+            var timer = getTimer(interval, false);
+            timer.Elapsed += restTimerElapsed;
+            return timer;
+        }
+
+        private void restTimerElapsed(object sender, EventArgs e)
+        {
+            RestSessionComplete(this, getEventArgs());
+            SessionComplete(this, getEventArgs());
+        }
+
+        private Timer getTimer(int interval, bool autoReset)
+        {
+            var timer = new Timer(interval)
             {
-                this.timer = getTimer();
-            }
-        }
-
-        public bool IsFinishedRunning()
-        {
-            return this.currentSeconds == 0;
-        }
-
-        private void decrementTimeRemaining()
-        {
-            this.currentSeconds -= 1;
-        }
-
-        private Timer getTimer()
-        {
-            var timer = new Timer(NumberOfMillisecondsInOneSecond)
-            {
-                AutoReset = true
+                AutoReset = autoReset
             };
-            timer.Elapsed += timer_Elapsed;
             return timer;
         }
     }
