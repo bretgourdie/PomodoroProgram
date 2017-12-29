@@ -64,9 +64,22 @@ namespace Pomodoro_Logic
             return timer;
         }
 
-        protected EventArgs getEventArgs()
+        protected void onSessionTimerComplete(EventArgs e)
         {
-            return new EventArgs();
+            onEvent(SessionTimerComplete, e);
+        }
+
+        protected void onSessionTimerTick(EventArgs e)
+        {
+            onEvent(SessionTimerTick, e);
+        }
+
+        private void onEvent(EventHandler handler, EventArgs e)
+        {
+            if(handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         protected abstract void startTimers();
