@@ -50,12 +50,23 @@ namespace Pomodoro_Logic
             throw new NotImplementedException();
         }
 
-        protected abstract void createTimers();
+        protected abstract void createSessionTimer();
+
+        protected void createTimers()
+        {
+            createSessionTimer();
+            secondTickTimer = createTimer(1);
+        }
 
         protected Timer createTimer(int seconds)
         {
             var timer = new Timer(seconds * MILLISECONDS_IN_ONE_SECOND);
             return timer;
+        }
+
+        protected EventArgs getEventArgs()
+        {
+            return new EventArgs();
         }
 
         protected abstract void startTimers();
