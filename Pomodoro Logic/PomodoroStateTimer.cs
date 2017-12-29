@@ -76,15 +76,26 @@ namespace Pomodoro_Logic
 
         private void onEvent(EventHandler handler, EventArgs e)
         {
-            if(handler != null)
+            if (handler != null)
             {
                 handler(this, e);
             }
         }
 
-        protected abstract void startTimers();
+        protected virtual void startTimers()
+        {
+            sessionTimer.Start();
+            secondTickTimer.Start();
+        }
 
-        protected abstract void sessionTimer_Elapsed(object sender, EventArgs e);
-        protected abstract void secondTickTimer_Elapsed(object sender, EventArgs e);
+        protected virtual void sessionTimer_Elapsed(object sender, EventArgs e)
+        {
+            onSessionTimerComplete(EventArgs.Empty);
+        }
+
+        protected virtual void secondTickTimer_Elapsed(object sender, EventArgs e)
+        {
+            onSessionTimerTick(EventArgs.Empty);
+        }
     }
 }
